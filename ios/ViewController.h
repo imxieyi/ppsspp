@@ -9,6 +9,8 @@
 
 @interface ViewController : GLKViewController <iCadeEventDelegate>
 
+@property (nonatomic, strong) EAGLContext* context;
+
 - (void)shutdown;
 
 @end

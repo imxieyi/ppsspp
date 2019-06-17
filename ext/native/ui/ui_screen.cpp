@@ -71,15 +71,20 @@ void UIScreen::deviceRestored() {
 		root_->DeviceRestored(screenManager()->getDrawContext());
 }
 
+
+extern void bindControllerFBO();
+
 void UIScreen::preRender() {
 	using namespace Draw;
+    bindControllerFBO();
 	Draw::DrawContext *draw = screenManager()->getDrawContext();
 	if (!draw) {
 		return;
 	}
 	draw->BeginFrame();
 	// Bind and clear the back buffer
-	draw->BindFramebufferAsRenderTarget(nullptr, { RPAction::CLEAR, RPAction::CLEAR, RPAction::CLEAR, 0xFF000000 });
+    Framebuffer *controllerFB = (Framebuffer *) draw->GetNativeObject(NativeObject::CONTROLLER_RENDER_BUFFER);
+	draw->BindFramebufferAsRenderTarget(controllerFB, { RPAction::CLEAR, RPAction::CLEAR, RPAction::CLEAR, 0xFF000000 });
 	screenManager()->getUIContext()->BeginFrame();
 
 	Draw::Viewport viewport;

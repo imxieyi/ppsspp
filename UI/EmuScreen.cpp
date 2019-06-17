@@ -1235,7 +1235,8 @@ void EmuScreen::render() {
 		// It's possible this might be set outside PSP_RunLoopFor().
 		// In this case, we need to double check it here.
 		checkPowerDown();
-		thin3d->BindFramebufferAsRenderTarget(nullptr, { RPAction::CLEAR, RPAction::CLEAR, RPAction::CLEAR });
+		Framebuffer *controllerFB = (Framebuffer *) thin3d->GetNativeObject(NativeObject::CONTROLLER_RENDER_BUFFER);
+		thin3d->BindFramebufferAsRenderTarget(controllerFB, { RPAction::CLEAR, RPAction::CLEAR, RPAction::CLEAR });
 		renderUI();
 		return;
 	}

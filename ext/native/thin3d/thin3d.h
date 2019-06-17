@@ -255,6 +255,7 @@ enum class NativeObject {
 	BOUND_TEXTURE1_IMAGEVIEW,
 	RENDER_MANAGER,
 	NULL_IMAGEVIEW,
+    CONTROLLER_RENDER_BUFFER,
 };
 
 enum FBColorDepth {

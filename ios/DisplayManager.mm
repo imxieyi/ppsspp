@@ -7,6 +7,7 @@
 
 #import "DisplayManager.h"
 #import "ViewController.h"
+#import "GamepadViewController.h"
 #import "AppDelegate.h"
 #include "base/display.h"
 #include "base/NativeApp.h"
@@ -19,11 +20,14 @@
 
 @property BOOL listenerActive;
 @property (atomic, retain) NSMutableArray<UIScreen *> *extDisplays;
+@property (atomic, retain) UIWindow *gamepadWindow;
 @property CGRect originalFrame;
 @property CGRect originalBounds;
 @property CGAffineTransform originalTransform;
 
 - (void)updateScreen:(UIScreen *)screen;
+- (void)showGamepad:(UIScreen *)screen;
+- (void)hideGamepad;
 
 @end
 
@@ -117,11 +121,13 @@
 			[gameWindow setBounds:CGRectMake(0, 0, fullSize.width, fullSize.height)];
 			[self updateResolution:screen];
 			[gameWindow setTransform:CGAffineTransformMakeScale(mode.size.width / fullSize.width, mode.size.height / fullSize.height)];
+			[self showGamepad:[UIScreen mainScreen]];
 		} else {
 			[gameWindow setTransform:[self originalTransform]];
 			[gameWindow setFrame:[self originalFrame]];
 			[gameWindow setBounds:[self originalBounds]];
 			[self updateResolution:screen];
+			[self hideGamepad];
 		}
 		[gameWindow setHidden:NO];
 	});
@@ -170,6 +176,20 @@
 	NativeResized();
 	
 	NSLog(@"Updated display resolution: (%d, %d) @%.1fx", pixel_xres, pixel_yres, scale);
+}
+
+- (void)showGamepad:(UIScreen *)screen {
+	if ([self gamepadWindow] == nil) {
+		[self setGamepadWindow:[[UIWindow alloc] initWithFrame:[self originalFrame]]];
+		[[self gamepadWindow] setScreen:screen];
+		[[self gamepadWindow] setBounds:[self originalBounds]];
+		[[self gamepadWindow] setRootViewController:[[GamepadViewController alloc] init]];
+	}
+	[[self gamepadWindow] setHidden:NO];
+}
+
+- (void)hideGamepad {
+	[[self gamepadWindow] setHidden:YES];
 }
 
 @end

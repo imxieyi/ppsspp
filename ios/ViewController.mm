@@ -89,7 +89,6 @@ static GraphicsContext *graphicsContext;
 	std::map<uint16_t, uint16_t> iCadeToKeyMap;
 }
 
-@property (nonatomic, strong) EAGLContext* context;
 @property (nonatomic, strong) NSMutableArray<NSDictionary *>* touches;
 //@property (nonatomic) iCadeReaderView* iCadeView;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_6_1

@@ -470,6 +470,9 @@ public:
 		switch (obj) {
 		case NativeObject::RENDER_MANAGER:
 			return (uintptr_t)&renderManager_;
+		case NativeObject::CONTROLLER_RENDER_BUFFER:
+			extern Framebuffer *controllerBuffer_;
+			return (uintptr_t)controllerBuffer_;
 		default:
 			return 0;
 		}

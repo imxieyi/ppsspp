@@ -15,6 +15,7 @@
 
 #ifdef IOS
 extern void bindDefaultFBO();
+extern void bindControllerFBO();
 #endif
 
 // Workaround for Retroarch. Simply declare
@@ -22,6 +23,7 @@ extern void bindDefaultFBO();
 // and set is as appropriate. Can adjust the variables in ext/native/base/display.h as
 // appropriate.
 GLuint g_defaultFBO = 0;
+GLuint g_controllerFBO = 1;
 
 void GLQueueRunner::CreateDeviceObjects() {
 	CHECK_GL_ERROR_IF_DEBUG();
